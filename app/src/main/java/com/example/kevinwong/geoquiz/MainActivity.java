@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
+    private Button mPrevButton;
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
 
@@ -92,6 +93,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mPrevButton = (Button)findViewById(R.id.prev_button);
+        mPrevButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                mCurrentIndex = mCurrentIndex - 1;
+                if(mCurrentIndex == -1)
+                {
+                    mCurrentIndex = mQuestionBank.length - 1;
+                }
+                updateQuestion();
+            }
+        });
         updateQuestion();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
