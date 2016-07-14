@@ -9,15 +9,17 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mNextButton;
-    private Button mPrevButton;
+    private ImageButton mNextButton;
+    private ImageButton mPrevButton;
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
 
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mNextButton = (Button)findViewById(R.id.next_button);
+        mNextButton = (ImageButton)findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mPrevButton = (Button)findViewById(R.id.prev_button);
+        mPrevButton = (ImageButton)findViewById(R.id.prev_button);
         mPrevButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v)
