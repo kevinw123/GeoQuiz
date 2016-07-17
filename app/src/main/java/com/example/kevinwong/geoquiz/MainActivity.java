@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private int mCurrentIndex = 0;
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private boolean mIsCheater;
 
     private TrueFalse[] mQuestionBank = new TrueFalse[]{
             new TrueFalse(R.string.question_oceans,true),
@@ -44,13 +45,15 @@ public class MainActivity extends AppCompatActivity {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
 
         int messageResId = 0;
-        if(userPressedTrue == answerIsTrue)
-        {
-            messageResId = R.string.correct_toast;
+        if(mIsCheater) {
+            messageResId = R.string.judgment_toast;
         }
-        else
-        {
-            messageResId = R.string.incorrect_toast;
+        else{
+            if (userPressedTrue == answerIsTrue) {
+                messageResId = R.string.correct_toast;
+            } else {
+                messageResId = R.string.incorrect_toast;
+            }
         }
 
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 mCurrentIndex = (mCurrentIndex+1) % mQuestionBank.length;
+                mIsCheater = false;
                 updateQuestion();
             }
         });
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     mCurrentIndex = mQuestionBank.length - 1;
                 }
+                mIsCheater = false;
                 updateQuestion();
             }
         });
@@ -125,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, CheatActivity.class);
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isTrueQuestion();
                 i.putExtra(CheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
-                startActivity(i);
+                startActivityForResult(i, 0);
             }
         });
         updateQuestion();
@@ -142,6 +147,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultcode, Intent data){
+        if (data == null){
+            return;
+        }
+        mIsCheater = data.getBooleanExtra(CheatActivity.EXTRA_ANSWER_SHOWN, false);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
