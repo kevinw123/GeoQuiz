@@ -1,5 +1,6 @@
 package com.example.kevinwong.geoquiz;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,7 +17,9 @@ public class CheatActivity extends AppCompatActivity {
     public static final String EXTRA_ANSWER_SHOWN = "com.example.kevinwong.geoquiz.answer_shown";
     private boolean mAnswerIsTrue;
     private TextView mAnswerTextView;
+    private TextView mBuildView;
     private Button mShowAnswer;
+    private String buildVersion;
 
     private void setAnswerShownResult(boolean isAnswerShown){
         Intent data = new Intent();
@@ -31,6 +34,9 @@ public class CheatActivity extends AppCompatActivity {
         setAnswerShownResult(false);
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
         mAnswerTextView = (TextView)findViewById(R.id.answerTextView);
+        mBuildView = (TextView)findViewById(R.id.showBuild);
+        buildVersion = Integer.valueOf(Build.VERSION.SDK_INT).toString();
+        mBuildView.setText("API Level " + buildVersion);
 
         mShowAnswer = (Button)findViewById(R.id.showAnswerButton);
         mShowAnswer.setOnClickListener(new View.OnClickListener(){
